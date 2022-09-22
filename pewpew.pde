@@ -3,6 +3,7 @@ int previousTime;
 int deltaTime;
 
 ArrayList<Mover> flock;
+int maxflock = 45;
 int flockSize = int(random(10,21));
 Vaisseau v;
 int maxBullets = 10;
@@ -52,17 +53,17 @@ for (int i = flock.size() - 1; i >= 0; i--) {
        Mover m = flock.get(i);
       if(v.Boum(m))
       {
-      boolean clear = false;
+      boolean OkRespawn = false;
       PVector respawn = new PVector(width/2,height/2);
-          while(!clear){
+          while(!OkRespawn){
             respawn = new PVector(random(0,width),random(0,height));
             for(Mover f : flock){
               if(PVector.dist(f.location, respawn) >= 10){
-              clear = true;
+              OkRespawn = true;
               }
               else
               {
-                clear = false;
+                 OkRespawn  = false;
               }
             }
           }
@@ -100,10 +101,13 @@ void display () {
 
 void mousePressed()
 {
-   Mover m = new Mover(new PVector(mouseX, mouseY), new PVector(random (-5, 5), random(-5, 5)));
-   m.fillColor = color(random(255), random(255), random(255));
-   flock.add(m);
-   flockSize += 1;
+  if(flock.size() <= maxflock){
+     Mover m = new Mover(new PVector(mouseX, mouseY), new PVector(random (-5, 5), random(-5, 5)));
+     m.fillColor = color(random(255), random(255), random(255));
+     flock.add(m);
+     flockSize += 1;
+  }
+  
 }
 
 void fire(GraphicObject m) {
