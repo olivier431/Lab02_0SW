@@ -75,6 +75,7 @@ for (int i = flock.size() - 1; i >= 0; i--) {
         {
             flock.remove(i);
             flockSize--;
+            b.isVisible = false;
         }
         
       }
